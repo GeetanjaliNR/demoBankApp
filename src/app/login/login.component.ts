@@ -32,10 +32,29 @@ export class LoginComponent implements OnInit {
     console.log(this.pswd);
   }
 
-  login() {
-    // alert('Login clicked!');
-    var acno = this.acno;
-    var pswd = this.pswd;
+  //login using event binding $event
+  // login() {
+
+  //   var acno = this.acno;
+  //   var pswd = this.pswd;
+
+  //   let database = this.database;
+
+  //   if (acno in database) {
+  //     if (pswd == database[acno]['password']) {
+  //       alert('Login successful!!');
+  //     } else {
+  //       alert('Invalid Password!!');
+  //     }
+  //   } else {
+  //     alert('Account number does not exist!');
+  //   }
+  // }
+
+  // login using Template referencing variable
+  login(a: any, p: any) {
+    var acno = a.value;
+    var pswd = p.value;
 
     let database = this.database;
 
