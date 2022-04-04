@@ -12,7 +12,7 @@ export class LoginComponent implements OnInit {
   pswd = '';
 
   //database
-  database = {
+  database: any = {
     1000: { acno: 1000, uname: 'Neer', password: 1000, balance: 5000 },
     1001: { acno: 1001, uname: 'Laisha', password: 1001, balance: 3000 },
     1002: { acno: 1002, uname: 'Vyom', password: 1002, balance: 4000 },
@@ -33,6 +33,20 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    alert('Login clicked!');
+    // alert('Login clicked!');
+    var acno = this.acno;
+    var pswd = this.pswd;
+
+    let database = this.database;
+
+    if (acno in database) {
+      if (pswd == database[acno]['password']) {
+        alert('Login successful!!');
+      } else {
+        alert('Invalid Password!!');
+      }
+    } else {
+      alert('Account number does not exist!');
+    }
   }
 }
