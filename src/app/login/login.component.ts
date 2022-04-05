@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -18,19 +19,19 @@ export class LoginComponent implements OnInit {
     1002: { acno: 1002, uname: 'Vyom', password: 1002, balance: 4000 },
   };
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {}
 
-  acnoChange(event: any) {
-    this.acno = event.target.value;
-    console.log(this.acno);
-  }
-
-  pswdChange(event: any) {
-    this.pswd = event.target.value;
-    console.log(this.pswd);
-  }
+  // event binding using $event
+  // acnoChange(event: any) {
+  //   this.acno = event.target.value;
+  //   console.log(this.acno);
+  // }
+  // pswdChange(event: any) {
+  //   this.pswd = event.target.value;
+  //   console.log(this.pswd);
+  // }
 
   //login using event binding $event
   login() {
@@ -42,6 +43,7 @@ export class LoginComponent implements OnInit {
     if (acno in database) {
       if (pswd == database[acno]['password']) {
         alert('Login successful!!');
+        this.router.navigateByUrl('dashboard');
       } else {
         alert('Invalid Password!!');
       }
