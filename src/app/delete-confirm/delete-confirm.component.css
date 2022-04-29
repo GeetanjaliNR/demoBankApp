@@ -1,0 +1,17 @@
+.deleteMsg {
+  color: white;
+  /* background-color: aquamarine; */
+  border: 1px solid;
+  width: max-content;
+  /* margin: 10px; */
+  margin-right: auto;
+  margin-left: auto;
+  padding: 20px;
+  align-items: center;
+  text-align: center;
+  transition: 5s ease-in-out;
+}
+
+.btn {
+  margin: 10px;
+}

@@ -1,0 +1,4 @@
+<div [@openClose]="isOpen ? 'open' : 'close'">
+  <p style="color: white">I'm {{ isOpen ? "open" : "closed" }}</p>
+  <button (click)="toggle()" class="btn btn-primary">Toggle</button>
+</div>

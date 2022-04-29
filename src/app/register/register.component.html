@@ -4,7 +4,6 @@
     ><b>&#169; HAFC Bank Pvt.Ltd </b></a
   >
   <span class="quote text-light">Giving you freedom...</span>
-  <span style="color: white">{{ aim }}</span>
 </nav>
 
 <div class="container col-md-12 mt-0">
@@ -14,20 +13,47 @@
         <h3 class="text-center">Sign In</h3>
       </div>
       <div class="card-body">
-        <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <form [formGroup]="registerForm" (ngSubmit)="register()">
           <div class="input-group form-group">
             <div class="input-group-prepend">
               <span class="input-group-text"><i class="fas fa-user"></i></span>
             </div>
             <!-- event binding using $event (change)="acnoChange($event)" -->
             <!-- Template referencing variable - #acno -->
-            <!-- two way binding using ngModel [(ngModel)]="acno" -->
+            <!-- two way binding using ngModel [(ngModel)]="uname"-->
+            <input
+              type="text"
+              name="username"
+              formControlName="uname"
+              class="form-control"
+              placeholder="User Name"
+              id="login_uname"
+              required
+            />
+          </div>
+          <!-- this.registerForm.get('uname')?.dirty) -->
+          <div
+            style="color: red"
+            *ngIf="
+              this.registerForm.get('uname')?.touched &&
+              this.registerForm.get('uname')?.errors
+            "
+          >
+            Invalid Username
+          </div>
+          <div class="input-group form-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-user"></i></span>
+            </div>
+            <!-- event binding using $event (change)="acnoChange($event)" -->
+            <!-- Template referencing variable - #acno -->
+            <!-- two way binding using ngModel -->
             <input
               type="text"
               name="acno"
               formControlName="acno"
               class="form-control"
-              [placeholder]="accNum"
+              placeholder="Account Number"
               id="login_accno"
               required
             />
@@ -35,8 +61,8 @@
           <div
             style="color: red"
             *ngIf="
-              this.loginForm.get('acno')?.touched &&
-              this.loginForm.get('acno')?.errors
+              this.registerForm.get('acno')?.touched &&
+              this.registerForm.get('acno')?.errors
             "
           >
             Invalid Account Number
@@ -47,7 +73,7 @@
             </div>
             <!-- event binding using $event (change)="pswdChange($event)" -->
             <!-- Template referencing variable - #pswd -->
-            <!-- two way binding using ngModel [(ngModel)]="pswd"-->
+            <!-- two way binding using ngModel -->
             <input
               type="password"
               name="pswd"
@@ -61,8 +87,8 @@
           <div
             style="color: red"
             *ngIf="
-              this.loginForm.get('pswd')?.touched &&
-              this.loginForm.get('pswd')?.errors
+              this.registerForm.get('pswd')?.touched &&
+              this.registerForm.get('pswd')?.errors
             "
           >
             Invalid Password
@@ -71,7 +97,7 @@
           <div class="form-group">
             <input
               type="submit"
-              value="Login"
+              value="Register"
               class="btn float-right login_btn"
               style="width: 50%"
             />
@@ -79,7 +105,7 @@
         </form>
       </div>
       <p style="color: white; align-items: baseline">
-        Not a user? <a routerLink="register">Register</a>
+        Existing user? <a routerLink="">Log In</a>
       </p>
     </div>
   </div>

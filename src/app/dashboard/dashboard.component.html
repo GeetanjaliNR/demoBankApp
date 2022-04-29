@@ -1,1 +1,244 @@
-<p style="color: white; margin: 20px">dashboard works!</p>
+<!-- As a link -->
+<nav class="navbar navbar-light bg-dark">
+  <a class="navbar-brand" href="#" style="color: rgb(85, 98, 237)"
+    ><b>&#169; HAFC Bank Pvt.Ltd </b></a
+  >
+  <span class="quote text-light">Giving you freedom...</span>
+  <button (click)="logout()" class="btn btn-warning">Logout</button>
+</nav>
+
+<!-- animation -->
+<app-animation-demo></app-animation-demo>
+<!-- deposite -->
+<div class="dashboard_head">
+  <div>
+    <h3 style="color: white">Welcome {{ user }}</h3>
+    <h5 style="color: white">
+      Login Details: {{ loginDate | date: "fullDate" }}
+    </h5>
+  </div>
+  <div style="text-align: end">
+    <h3>
+      <a style="color: #ffffffa0" routerLink="/transaction"
+        >Transaction History</a
+      >
+    </h3>
+    <button (click)="deleteFromParent()" class="btn btn-danger">Delete</button>
+  </div>
+</div>
+
+<app-delete-confirm
+  (onDelete)="onDelete($event)"
+  (onCancel)="onCancel()"
+  [item]="acno"
+></app-delete-confirm>
+<div [ngClass]="acno ? 'style1' : ''" class="container col-md-12 mt-0">
+  <div class="d-flex justify-content-center h-100">
+    <div class="card">
+      <div class="card-header">
+        <h3 appHighlight class="text-center">Deposit Form</h3>
+      </div>
+      <div class="card-body">
+        <!-- deposit form -->
+        <form [formGroup]="depositForm" (ngSubmit)="deposit()">
+          <!-- account -->
+          <div class="input-group form-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-user"></i></span>
+            </div>
+            <!-- event binding using $event (change)="acnoChange($event)" -->
+            <!-- Template referencing variable - #acno -->
+            <!-- two way binding using ngModel [(ngModel)]="acno"-->
+            <input
+              type="text"
+              name="acno"
+              formControlName="acno"
+              class="form-control"
+              placeholder="Account Number"
+              id="login_accno"
+              required
+            />
+          </div>
+          <div
+            style="color: red"
+            *ngIf="
+              this.depositForm.get('acno')?.errors &&
+              this.depositForm.get('acno')?.touched
+            "
+          >
+            Invalid Account Number
+          </div>
+          <!-- password -->
+          <div class="input-group form-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-key"></i></span>
+            </div>
+            <!-- event binding using $event (change)="pswdChange($event)" -->
+            <!-- Template referencing variable - #pswd -->
+            <!-- two way binding using ngModel [(ngModel)]="pswd" -->
+            <input
+              type="password"
+              name="pswd"
+              formControlName="pswd"
+              class="form-control"
+              placeholder="password"
+              id="login_password"
+              required
+            />
+          </div>
+          <div
+            style="color: red"
+            *ngIf="
+              this.depositForm.get('pswd')?.touched &&
+              this.depositForm.get('pswd')?.errors
+            "
+          >
+            Invalid password
+          </div>
+
+          <!-- amount -->
+          <div class="input-group form-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-user"></i></span>
+            </div>
+            <!-- event binding using $event (change)="acnoChange($event)" -->
+            <!-- Template referencing variable - #acno -->
+            <!-- two way binding using ngModel [(ngModel)]="amount" -->
+            <input
+              type="text"
+              name="amount"
+              formControlName="amount"
+              class="form-control"
+              placeholder="Amount"
+              id="deposit"
+              required
+            />
+          </div>
+          <div
+            style="color: red"
+            *ngIf="
+              this.depositForm.get('amount')?.touched &&
+              this.depositForm.get('amount')?.errors
+            "
+          >
+            Invalid Amount
+          </div>
+          <!--  -->
+          <div class="form-group">
+            <input
+              type="submit"
+              value="Deposit"
+              class="btn float-right login_btn"
+              style="width: 50%"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- withdraw -->
+<div [ngClass]="acno ? 'style1' : ''" class="container col-md-12 mt-0">
+  <div class="d-flex justify-content-center h-100">
+    <div class="card">
+      <div class="card-header">
+        <h3 appHighlight class="text-center">Withdraw Form</h3>
+      </div>
+      <div class="card-body">
+        <!-- deposit form -->
+        <form [formGroup]="withdrawForm" (ngSubmit)="withdraw()">
+          <!-- account -->
+          <div class="input-group form-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-user"></i></span>
+            </div>
+            <!-- event binding using $event (change)="acnoChange($event)" -->
+            <!-- Template referencing variable - #acno -->
+            <!-- two way binding using ngModel [(ngModel)]="acno1"-->
+            <input
+              type="text"
+              name="acno"
+              formControlName="acno1"
+              class="form-control"
+              placeholder="Account Number"
+              id="login_accno"
+              required
+            />
+          </div>
+          <div
+            style="color: red"
+            *ngIf="
+              this.withdrawForm.get('acno1')?.errors &&
+              this.withdrawForm.get('acno1')?.touched
+            "
+          >
+            Invalid Account Number
+          </div>
+          <!-- password -->
+          <div class="input-group form-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-key"></i></span>
+            </div>
+            <!-- event binding using $event (change)="pswdChange($event)" -->
+            <!-- Template referencing variable - #pswd -->
+            <!-- two way binding using ngModel [(ngModel)]="pswd1"-->
+            <input
+              type="password"
+              name="pswd"
+              formControlName="pswd1"
+              class="form-control"
+              placeholder="password"
+              id="login_password"
+              required
+            />
+          </div>
+          <div
+            style="color: red"
+            *ngIf="
+              this.withdrawForm.get('pswd1')?.errors &&
+              this.withdrawForm.get('pswd1')?.touched
+            "
+          >
+            Invalid Password
+          </div>
+          <!-- amount -->
+          <div class="input-group form-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-user"></i></span>
+            </div>
+            <!-- event binding using $event (change)="acnoChange($event)" -->
+            <!-- Template referencing variable - #acno -->
+            <!-- two way binding using ngModel [(ngModel)]="amount1"-->
+            <input
+              type="text"
+              name="amount"
+              formControlName="amount1"
+              class="form-control"
+              placeholder="Amount"
+              id="deposit"
+              required
+            />
+          </div>
+          <div
+            style="color: red"
+            *ngIf="
+              this.withdrawForm.get('amount1')?.errors &&
+              this.withdrawForm.get('amount1')?.touched
+            "
+          >
+            Invalid Amount
+          </div>
+          <!--  -->
+          <div class="form-group">
+            <input
+              type="submit"
+              value="Withdraw"
+              class="btn float-right login_btn"
+              style="width: 50%"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

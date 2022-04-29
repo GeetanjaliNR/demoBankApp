@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { DataService } from '../service/data.service';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -9,17 +11,26 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   aim = 'Your Perfect Banking Partner';
   accNum = 'Account Number Please!!';
-  acno = '';
-  pswd = '';
+  // acno = '';
+  // pswd = '';
 
   //database
-  database: any = {
-    1000: { acno: 1000, uname: 'Neer', password: 1000, balance: 5000 },
-    1001: { acno: 1001, uname: 'Laisha', password: 1001, balance: 3000 },
-    1002: { acno: 1002, uname: 'Vyom', password: 1002, balance: 4000 },
-  };
+  // database: any = {
+  //   1000: { acno: 1000, uname: 'Neer', password: 1000, balance: 5000 },
+  //   1001: { acno: 1001, uname: 'Laisha', password: 1001, balance: 3000 },
+  //   1002: { acno: 1002, uname: 'Vyom', password: 1002, balance: 4000 },
+  // };
 
-  constructor(private router: Router) {}
+  loginForm = this.fb.group({
+    acno: ['', [Validators.required, Validators.pattern('[0-9]*')]],
+    pswd: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]*')]],
+  });
+
+  constructor(
+    private router: Router,
+    private db: DataService,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {}
 
@@ -34,21 +45,21 @@ export class LoginComponent implements OnInit {
   // }
 
   //login using event binding $event
+  // modifying login using dependency injection
+
   login() {
-    var acno = this.acno;
-    var pswd = this.pswd;
+    var acno = this.loginForm.value.acno;
+    var pswd = this.loginForm.value.pswd;
 
-    let database = this.database;
+    if (this.loginForm.valid) {
+      const result = this.db.login(acno, pswd);
 
-    if (acno in database) {
-      if (pswd == database[acno]['password']) {
+      if (result) {
         alert('Login successful!!');
         this.router.navigateByUrl('dashboard');
-      } else {
-        alert('Invalid Password!!');
       }
     } else {
-      alert('Account number does not exist!');
+      alert('invalid form');
     }
   }
 

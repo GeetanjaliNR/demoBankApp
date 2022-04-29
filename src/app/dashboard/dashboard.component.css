@@ -1,0 +1,11 @@
+.dashboard_head {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  margin: 20px;
+}
+
+.style1 {
+  /* opacity: 0; */
+  display: none;
+}

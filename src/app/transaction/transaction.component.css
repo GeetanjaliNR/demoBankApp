@@ -1,0 +1,13 @@
+table,
+th {
+  color: white;
+  border: solid 2px white;
+  margin: 10px auto;
+  width: 60vw;
+}
+th {
+  border: solid 1px #ffffff9a;
+}
+.row_heading {
+  background-color: green;
+}
