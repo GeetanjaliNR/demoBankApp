@@ -52,12 +52,27 @@ export class LoginComponent implements OnInit {
     var pswd = this.loginForm.value.pswd;
 
     if (this.loginForm.valid) {
-      const result = this.db.login(acno, pswd);
-
-      if (result) {
-        alert('Login successful!!');
-        this.router.navigateByUrl('dashboard');
-      }
+      this.db.login(acno, pswd).subscribe(
+        (result: any) => {
+          //storing username, acno and token into localstorage
+          if (result) {
+            localStorage.setItem(
+              'currentAcno',
+              JSON.stringify(result.currentAcno)
+            );
+            localStorage.setItem(
+              'currentUser',
+              JSON.stringify(result.currentUser)
+            );
+            localStorage.setItem('token', JSON.stringify(result.token));
+            alert('Login successful!!');
+            this.router.navigateByUrl('dashboard');
+          }
+        },
+        (result: any) => {
+          alert(result.error.message);
+        }
+      );
     } else {
       alert('invalid form');
     }

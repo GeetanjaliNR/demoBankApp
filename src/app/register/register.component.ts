@@ -19,7 +19,7 @@ export class RegisterComponent implements OnInit {
     pswd: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]*')]],
   });
   constructor(
-    private db: DataService,
+    private ds: DataService,
     private router: Router,
     private fb: FormBuilder
   ) {}
@@ -33,15 +33,18 @@ export class RegisterComponent implements OnInit {
     var pswd = this.registerForm.value.pswd;
 
     if (this.registerForm.valid) {
-      let result = this.db.register(uname, acno, pswd);
-
-      if (result) {
-        alert('Registration complete!!');
-        this.router.navigateByUrl('');
-      } else {
-        alert('Account already exists!');
-        this.router.navigateByUrl('');
-      }
+      this.ds.register(uname, acno, pswd).subscribe(
+        (result: any) => {
+          if (result) {
+            alert(result.message);
+            this.router.navigateByUrl('');
+          }
+        },
+        (result: any) => {
+          alert(result.error.message);
+          this.router.navigateByUrl('');
+        }
+      );
     } else {
       alert('form invalid');
     }

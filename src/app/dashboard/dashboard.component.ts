@@ -34,19 +34,19 @@ export class DashboardComponent implements OnInit {
   acno: any;
 
   constructor(
-    private db: DataService,
+    private ds: DataService,
     private fb: FormBuilder,
     private router: Router
   ) {
-    this.user = this.db.currentUser;
+    this.user = JSON.parse(localStorage.getItem('currentUser') || '');
     this.loginDate = new Date();
   }
 
   ngOnInit(): void {
-    if (!localStorage.getItem('currentAcno')) {
-      alert('Session expired!! Please login..');
-      this.router.navigateByUrl('');
-    }
+    // if (!localStorage.getItem('currentAcno')) {
+    //   alert('Session expired!! Please login..');
+    //   this.router.navigateByUrl('');
+    // }
   }
 
   deposit() {
@@ -55,10 +55,16 @@ export class DashboardComponent implements OnInit {
     let amount = this.depositForm.value.amount;
 
     if (this.depositForm.valid) {
-      let result = this.db.deposit(acno, pswd, amount);
-      if (result) {
-        alert(amount + ' successfully deposited. current balance is ' + result);
-      }
+      this.ds.deposit(acno, pswd, amount).subscribe(
+        (result: any) => {
+          if (result) {
+            alert(result.message);
+          }
+        },
+        (result: any) => {
+          alert(result.error.message);
+        }
+      );
     } else {
       alert('deposit form invalid!!');
     }
@@ -71,10 +77,16 @@ export class DashboardComponent implements OnInit {
     let amount = this.withdrawForm.value.amount1;
 
     if (this.withdrawForm.valid) {
-      let result = this.db.withdraw(acno, pswd, amount);
-      if (result) {
-        alert(amount + ' successfully debited. current balance is ' + result);
-      }
+      this.ds.withdraw(acno, pswd, amount).subscribe(
+        (result: any) => {
+          if (result) {
+            alert(result.message);
+          }
+        },
+        (result: any) => {
+          alert(result.error.message);
+        }
+      );
     } else {
       alert('withdraw form invalid!!');
     }
@@ -98,6 +110,18 @@ export class DashboardComponent implements OnInit {
 
   //onDelete
   onDelete(event: any) {
-    alert('deleting the Account ' + event);
+    this.ds.onDelete(event).subscribe(
+      (result: any) => {
+        if (result) {
+          alert(result.message);
+          this.router.navigateByUrl('');
+        }
+      },
+      (result: any) => {
+        alert(result.error.message);
+      }
+    );
+
+    // alert('deleting the Account ' + event);
   }
 }
